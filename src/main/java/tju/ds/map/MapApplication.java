@@ -19,4 +19,16 @@ public class MapApplication extends Application {
         primaryStage.show();
         new LoginController().show(primaryStage);
     }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        System.out.println(this + "init()...");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.out.println(this + "stop()...");
+    }
 }
