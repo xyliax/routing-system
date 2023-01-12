@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="720.0" prefWidth="1080.0"
+            style="-fx-background-color: linear-gradient(to right,#cfddf0,#95d7d5);" xmlns="http://javafx.com/javafx/19"
+            fx:controller="tju.ds.map.MapController">
+   <children>
+      <HBox layoutX="170.0" layoutY="-71.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="180.0">
+               <children>
+                  <VBox prefHeight="180.0" prefWidth="180.0"
+                        style="-fx-background-color: #f3f3f3; -fx-background-radius: 0 40 40 0;">
+                     <children>
+                        <ImageView fitHeight="189.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../map-logo.png"/>
+                           </image>
+                        </ImageView>
+                        <Label fx:id="usernameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0"
+                               prefWidth="158.0" text="张行樾">
+                           <font>
+                              <Font name="Yuanti SC Regular" size="24.0"/>
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="540.0" prefWidth="180.0"
+                        style="-fx-background-color: #fcfaee; -fx-background-radius: 0 40 40 0;"/>
+               </children>
+            </VBox>
+            <Canvas fx:id="canvas" height="720.0" width="840.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets/>
+               </HBox.margin>
+            </Canvas>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

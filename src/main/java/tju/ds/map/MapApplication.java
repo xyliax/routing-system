@@ -3,12 +3,15 @@ package tju.ds.map;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import tju.ds.map.dao.MongoController;
 
 import java.io.IOException;
 
-public class MapApplication extends Application {
+public final class MapApplication extends Application {
+    public static Stage stage;
+
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 
     @Override
@@ -16,7 +19,15 @@ public class MapApplication extends Application {
         primaryStage.setTitle("路面导航系统");
         Image logoImage = new Image("tju-logo.png");
         primaryStage.getIcons().add(logoImage);
+        primaryStage.setScene(LoginController.scene());
+        primaryStage.setResizable(false);
         primaryStage.show();
-        new LoginController().show(primaryStage);
+        stage = primaryStage;
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        new Thread(() -> MongoController.getInstance().connect()).start();
     }
 }
