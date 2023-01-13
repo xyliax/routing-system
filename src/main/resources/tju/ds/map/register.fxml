@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19"
+            fx:controller="tju.ds.map.RegisterController">
+    <top>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0"
+                    style="-fx-background-color: linear-gradient(to top,#5694cd,#92bbd2);"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fx:id="loginLogo" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../login-logo.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </top>
+    <right>
+        <AnchorPane style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" layoutY="17.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0"
+                      AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" prefHeight="80.0"
+                                       prefWidth="120.0"
+                                       style="-fx-background-color: linear-gradient(to right,#5da007,#8ac184); -fx-background-radius: 20 0 0 20;"
+                                       text="用户名" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="20.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </Label>
+                                <TextField fx:id="usernameField" onKeyPressed="#onUsernameFieldKeyPressed"
+                                           prefHeight="80.0" prefWidth="420.0" promptText="新用户名"
+                                           style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="24.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </TextField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="80.0" prefWidth="120.0"
+                                       style="-fx-background-color: linear-gradient(to right,#5da007,#8ac184); -fx-background-radius: 20 0 0 20;"
+                                       text="密码">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="20.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </Label>
+                                <PasswordField fx:id="passwordField" onKeyPressed="#onPasswordFieldKeyPressed"
+                                               prefHeight="80.0" prefWidth="420.0" promptText="请输入密码"
+                                               style="-fx-background-radius: 0 20 20 0; -fx-background-color: #CCC8B9;">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="24.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </PasswordField>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="80.0" prefWidth="120.0"
+                                       style="-fx-background-color: linear-gradient(to right,#5da007,#8ac184); -fx-background-radius: 20 0 0 20;"
+                                       text="确认密码">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="20.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </Label>
+                                <PasswordField fx:id="confirmField" onKeyPressed="#onPasswordFieldKeyPressed"
+                                               prefHeight="80.0" prefWidth="420.0" promptText="请再次输入密码"
+                                               style="-fx-background-radius: 0 20 20 0; -fx-background-color: #CCC8B9;"
+                                               HBox.hgrow="ALWAYS">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="24.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                </PasswordField>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER"
+                                        mnemonicParsing="false" onMouseClicked="#onBackButtonClicked" prefHeight="80.0"
+                                        prefWidth="180.0"
+                                        style="-fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom,#c69357,red);"
+                                        text="我已经有账户了！" textFill="WHITE" underline="true">
+                                    <font>
+                                        <Font name="Heiti TC Medium" size="18.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND"/>
+                                    </cursor>
+                                    <HBox.margin>
+                                        <Insets/>
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER"
+                                        mnemonicParsing="false" onMouseClicked="#onRegisterButtonClicked"
+                                        prefHeight="80.0"
+                                        prefWidth="120.0"
+                                        style="-fx-background-radius: 100; -fx-background-color: linear-gradient(to top,#5da007,#8ac184);"
+                                        text="注    册" textFill="#0e5b2e">
+                                    <font>
+                                        <Font name="Heiti TC Medium" size="24.0"/>
+                                    </font>
+                                    <effect>
+                                        <Blend/>
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND"/>
+                                    </cursor>
+                                    <HBox.margin>
+                                        <Insets left="40.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="60.0"/>
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </right>
+    <left>
+        <AnchorPane style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <ImageView layoutX="100.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true"
+                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                           AnchorPane.topAnchor="0.0">
+                    <image>
+                        <Image url="@../../../map-logo.png"/>
+                    </image>
+                    <viewport>
+                        <Rectangle2D/>
+                    </viewport>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
+</BorderPane>
