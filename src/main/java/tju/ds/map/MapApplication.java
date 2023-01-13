@@ -30,16 +30,4 @@ public final class MapApplication extends Application {
         super.init();
         new Thread(() -> MongoController.getInstance().connect()).start();
     }
-
-    @Override
-    public void init() throws Exception {
-        super.init();
-        System.out.println(this + "init()...");
-    }
-
-    @Override
-    public void stop() throws Exception {
-        super.stop();
-        System.out.println(this + "stop()...");
-    }
 }

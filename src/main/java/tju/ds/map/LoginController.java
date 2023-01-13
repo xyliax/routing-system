@@ -60,7 +60,8 @@ public class LoginController {
             } else {
                 //TODO: success
                 MapController.user = user;
-                stage.setScene(MapController.scene());
+                stage.setScene(AdminController.scene());
+                //stage.setScene(MapController.scene());
             }
             loginButton.setText(text);
         });
