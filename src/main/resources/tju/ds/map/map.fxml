@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="720.0" prefWidth="1080.0"
             style="-fx-background-color: linear-gradient(to right,#cfddf0,#95d7d5);" xmlns="http://javafx.com/javafx/19"
             fx:controller="tju.ds.map.MapController">
@@ -39,11 +35,7 @@
                         style="-fx-background-color: #fcfaee; -fx-background-radius: 0 40 40 0;"/>
                </children>
             </VBox>
-            <Canvas fx:id="canvas" height="720.0" width="840.0" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets/>
-               </HBox.margin>
-            </Canvas>
+            <AnchorPane fx:id="pane" prefHeight="720.0" prefWidth="900.0"/>
          </children>
       </HBox>
    </children>

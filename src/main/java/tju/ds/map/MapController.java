@@ -2,20 +2,20 @@ package tju.ds.map;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
+import tju.ds.map.model.Edge;
 import tju.ds.map.model.Graph;
 import tju.ds.map.model.User;
 import tju.ds.map.model.Vertex;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MapController {
     public static User user;
@@ -23,7 +23,7 @@ public class MapController {
     @FXML
     private Label usernameLabel;
     @FXML
-    private Canvas canvas;
+    private AnchorPane pane;
 
     @SneakyThrows
     public static Scene scene() {
@@ -46,12 +46,24 @@ public class MapController {
 //        mongoController.insertVertex(v5);
         ArrayList<Vertex> vertexArrayList = mongoController.retrieveAllVertices();
         Graph graph = new Graph(vertexArrayList, new ArrayList<>());
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        //context.strokeOval(v1.getX(), v1.getY(), 10, 10);
-        Circle circle = new Circle(10, Color.DARKGREY);
-        circle.setCenterX(v1.getX());
-        circle.setCenterY(v1.getY());
-        Group group = new Group(circle);
-        context.strokeOval(500, 500, 10, 10);
+        render(graph);
+    }
+
+    private void render(Graph graph) {
+        pane.getChildren().clear();
+        for (Vertex vertex : graph.getGraph().keySet()) {
+            Circle circle = new Circle(vertex.getX(), vertex.getY(), 5, Color.NAVY);
+            pane.getChildren().add(circle);
+            LinkedList<Edge> edges = graph.getGraph().get(vertex);
+            for (Edge edge : edges) {
+//                double x1 = edge.getX();
+//                double y1 = vertex.getY();
+//                Double[] points = new Double[] {
+//                    x
+//                };
+//                Polygon polygon = new Polygon();
+//                polygon.getPoints().add()
+            }
+        }
     }
 }
