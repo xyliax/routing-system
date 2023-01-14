@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class MapController {
     private final MongoController mongoController = MongoController.getInstance();
-    private Graph graph;
+    private static Graph graph;
     private HashMap<String, Polygon> edgeIdShapeMap;
     private HashMap<String, Circle> vertexIdShapeMap;
     @FXML
@@ -53,13 +53,13 @@ public class MapController {
 //        mongoController.insertEdge(edge);
         ArrayList<Vertex> vertexArrayList = mongoController.retrieveAllVertices();
         ArrayList<Edge> edgeArrayList = mongoController.retrieveAllEdges();
-        this.graph = new Graph(vertexArrayList, edgeArrayList);
+        MapController.graph = new Graph(vertexArrayList, edgeArrayList);
         refreshLogo.setOnMouseClicked(event -> this.initialize());
         refreshLogo.setCursor(Cursor.HAND);
         refreshLogo.setOnMouseEntered(event -> new Pulse(refreshLogo).play());
         mapPane.getChildren().clear();
         mapPane.getChildren().add(refreshLogo);
-        render(this.graph);
+        render(MapController.graph);
     }
 
     private void render(Graph graph) {
