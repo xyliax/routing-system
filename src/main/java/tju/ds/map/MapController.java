@@ -17,13 +17,15 @@ import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
 import tju.ds.map.model.Edge;
 import tju.ds.map.model.Graph;
+import tju.ds.map.model.UserType;
 import tju.ds.map.model.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static tju.ds.map.MapApplication.stage;
+
 public class MapController {
-    static Graph graph;
     private final MongoController mongoController = MongoController.getInstance();
     private HashMap<String, Polygon> edgeIdShapeMap;
     private HashMap<String, Circle> vertexIdShapeMap;
@@ -53,13 +55,17 @@ public class MapController {
 //        mongoController.insertEdge(edge);
         ArrayList<Vertex> vertexArrayList = mongoController.retrieveAllVertices();
         ArrayList<Edge> edgeArrayList = mongoController.retrieveAllEdges();
-        MapController.graph = new Graph(vertexArrayList, edgeArrayList);
-        refreshLogo.setOnMouseClicked(event -> this.initialize());
+        Graph graph = new Graph(vertexArrayList, edgeArrayList);
+        refreshLogo.setOnMouseClicked(event -> {
+            if (LoginController.user.getType() == UserType.ADMIN)
+                stage.setScene(AdminController.scene());
+            else this.initialize();
+        });
         refreshLogo.setCursor(Cursor.HAND);
         refreshLogo.setOnMouseEntered(event -> new Pulse(refreshLogo).play());
         mapPane.getChildren().clear();
         mapPane.getChildren().add(refreshLogo);
-        render(MapController.graph);
+        render(graph);
     }
 
     private void render(Graph graph) {

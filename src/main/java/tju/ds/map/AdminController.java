@@ -1,12 +1,16 @@
 package tju.ds.map;
 
 import animatefx.animation.FlipInX;
-import animatefx.animation.Wobble;
 import javafx.animation.Animation;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -14,14 +18,17 @@ import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
 import tju.ds.map.model.*;
 
-import java.io.IOException;
-import java.nio.Buffer;
+import java.util.ArrayList;
 
 import static tju.ds.map.MapApplication.stage;
-import static tju.ds.map.MapController.graph;
 
 public class AdminController {
     private final MongoController mongoController = MongoController.getInstance();
+    private Graph graph;
+    private User user;
+    private Vertex vertex;
+    private Edge edge;
+    private RadioButton radioButtonSelected = null;
     @FXML
     private TextField usernameField1;
     @FXML
@@ -33,13 +40,13 @@ public class AdminController {
     @FXML
     private CheckBox adminButton;
     @FXML
-    private Button SaveButton;
+    private Button userSaveButton;
     @FXML
-    private Button BackButton;
+    private Button backButton;
     @FXML
     private Button mapButton;
     @FXML
-    private Button userdeleteButton;
+    private Button userDeleteButton;
     @FXML
     private TextField vertexField;
     @FXML
@@ -64,11 +71,16 @@ public class AdminController {
     private Button edgeDeleteButton;
     @FXML
     private Button edgeSaveButton;
-
-
-    private User user;
-    private Vertex vertex;
-    private Edge edge;
+    @FXML
+    private RadioButton radioButton1;
+    @FXML
+    private RadioButton radioButton2;
+    @FXML
+    private RadioButton radioButton3;
+    @FXML
+    private RadioButton radioButton4;
+    @FXML
+    private RadioButton radioButton5;
 
     @SneakyThrows
     public static Scene scene() {
@@ -78,8 +90,45 @@ public class AdminController {
 
     @FXML
     public void initialize() {
-        ToggleGroup tg = new ToggleGroup();
+        refreshGraph();
+        backButton.setOnMouseClicked(event -> stage.setScene(LoginController.scene()));
+        mapButton.setOnMouseClicked(event -> stage.setScene(MapController.scene()));
+        userDeleteButton.setOnMouseClicked(event -> {
+            Animation loginAnimation = new FlipInX(userDeleteButton).getTimeline();
+            loginAnimation.setOnFinished(actionEvent -> mongoController.deleteUser(user));
+            loginAnimation.play();
+            userDeleteButton.setText("已删除");
+        });
+        vertexDeleteButton.setOnMouseClicked(event -> {
+            Animation loginAnimation = new FlipInX(vertexDeleteButton).getTimeline();
+            loginAnimation.setOnFinished(actionEvent -> mongoController.deleteVertex(vertex));
+            loginAnimation.play();
+            vertexDeleteButton.setText("已删除");
+        });
+        edgeDeleteButton.setOnMouseClicked(event -> {
+            Animation loginAnimation = new FlipInX(edgeDeleteButton).getTimeline();
+            loginAnimation.setOnFinished(actionEvent -> mongoController.deleteEdge(edge));
+            loginAnimation.play();
+            edgeDeleteButton.setText("已删除");
+        });
+        EventHandler<ActionEvent> radioHandler = event -> {
+            if (radioButtonSelected != null)
+                radioButtonSelected.setSelected(false);
+            if (((RadioButton) event.getSource()).isSelected())
+                radioButtonSelected = (RadioButton) event.getSource();
+            else radioButtonSelected = null;
+        };
+        radioButton1.setOnAction(radioHandler);
+        radioButton2.setOnAction(radioHandler);
+        radioButton3.setOnAction(radioHandler);
+        radioButton4.setOnAction(radioHandler);
+        radioButton5.setOnAction(radioHandler);
+    }
 
+    private void refreshGraph() {
+        ArrayList<Vertex> vertexArrayList = mongoController.retrieveAllVertices();
+        ArrayList<Edge> edgeArrayList = mongoController.retrieveAllEdges();
+        this.graph = new Graph(vertexArrayList, edgeArrayList);
     }
 
     @FXML
@@ -90,7 +139,7 @@ public class AdminController {
                 usernameField1.clear();
                 passwordField.clear();
                 usernameField1.setPromptText("找不到该用户！！！");
-                BackButton.requestFocus();
+                backButton.requestFocus();
                 adminButton.setSelected(false);
             } else {
                 passwordField.setText(user.getPassword());
@@ -102,8 +151,8 @@ public class AdminController {
     }
 
     @FXML
-    protected void OnSaveButtonClicked(MouseEvent mouseEvent) {
-        Animation loginAnimation = new FlipInX(SaveButton).getTimeline();
+    protected void OnUserSaveButtonClicked(MouseEvent mouseEvent) {
+        Animation loginAnimation = new FlipInX(userSaveButton).getTimeline();
         loginAnimation.setOnFinished(event -> {
             if (user != null) {
                 user.setUsername(usernameField1.getText());
@@ -116,7 +165,7 @@ public class AdminController {
                     user.setType(UserType.NORMAL);
                 }
                 mongoController.updateUser(user);
-                SaveButton.setText("保存成功!");
+                userSaveButton.setText("保存成功!");
             } else {
                 User newUser = new User(null, usernameField1.getText(), passwordField.getText(), UserType.NORMAL, mobileField.getText(), emailField.getText(), null);
                 if (adminButton.isSelected()) {
@@ -125,30 +174,10 @@ public class AdminController {
                     newUser.setType(UserType.NORMAL);
                 }
                 mongoController.insertUser(newUser);
-                SaveButton.setText("新建成功!");
+                userSaveButton.setText("新建成功!");
             }
         });
         loginAnimation.play();
-    }
-
-    @FXML
-    protected void OnUserDeleteButtonClicked(MouseEvent mouseEvent) {
-        Animation loginAnimation = new FlipInX(userdeleteButton).getTimeline();
-        loginAnimation.setOnFinished(event -> {
-            mongoController.deleteUser(user);
-        });
-        loginAnimation.play();
-        userdeleteButton.setText("已删除");
-    }
-
-    @FXML
-    protected void OnBackButtonClicked(MouseEvent mouseEvent) throws IOException {
-        stage.setScene(LoginController.scene());
-    }
-
-    @FXML
-    protected void OnMapButtonClicked(MouseEvent mouseEvent) throws IOException {
-        stage.setScene(MapController.scene());
     }
 
     @FXML
@@ -160,22 +189,12 @@ public class AdminController {
                 x_vertexField.clear();
                 y_vertexField.clear();
                 vertexField.setPromptText("不存在该节点！！！");
-                BackButton.requestFocus();
+                backButton.requestFocus();
             } else {
                 x_vertexField.setText("" + vertex.getX());
                 y_vertexField.setText("" + vertex.getY());
             }
         }
-    }
-
-    @FXML
-    public void OnVertexDeleteButtonClicked(MouseEvent mouseEvent) {
-        Animation loginAnimation = new FlipInX(vertexDeleteButton).getTimeline();
-        loginAnimation.setOnFinished(event -> {
-            mongoController.deleteVertex(vertex);
-        });
-        loginAnimation.play();
-        vertexDeleteButton.setText("已删除");
     }
 
     @FXML
@@ -208,7 +227,7 @@ public class AdminController {
                 distanceField.clear();
                 limitField.clear();
                 edgeField.setPromptText("不存在这条路！！！");
-                BackButton.requestFocus();
+                backButton.requestFocus();
             } else {
                 u_edgeField.setText(graph.getVertices().get(edge.getUId()).getName());
                 v_edgeField.setText(graph.getVertices().get(edge.getVId()).getName());
@@ -217,16 +236,6 @@ public class AdminController {
                 //道路情况
             }
         }
-    }
-
-    @FXML
-    public void OnEdgeDeleteButtonClicked(MouseEvent mouseEvent) {
-        Animation loginAnimation = new FlipInX(edgeDeleteButton).getTimeline();
-        loginAnimation.setOnFinished(event -> {
-            mongoController.deleteEdge(edge);
-        });
-        loginAnimation.play();
-        edgeDeleteButton.setText("已删除");
     }
 
     @FXML
@@ -242,13 +251,11 @@ public class AdminController {
                 mongoController.updateEdge(edge);
                 edgeSaveButton.setText("保存成功!");
             } else {
-                Edge newEdge = new Edge(null, edgeField.getText(), u_edgeField.getText(),v_edgeField.getText(),Double.parseDouble(distanceField.getText()), Double.parseDouble(limitField.getText()), EdgeCondition.UNKNOWN);
+                Edge newEdge = new Edge(null, edgeField.getText(), u_edgeField.getText(), v_edgeField.getText(), Double.parseDouble(distanceField.getText()), Double.parseDouble(limitField.getText()), EdgeCondition.UNKNOWN);
                 mongoController.insertEdge(newEdge);
                 edgeSaveButton.setText("新建成功!");
             }
         });
         loginAnimation.play();
     }
-
-
 }

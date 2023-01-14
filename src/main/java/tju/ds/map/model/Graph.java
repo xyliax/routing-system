@@ -20,9 +20,6 @@ public class Graph {
         });
         edgeArrayList.forEach(edge -> {
             LinkedList<Edge> edgeLinkedList = graph.get(vertices.get(edge.uId));
-            System.out.println(vertices);
-            System.out.println(edge);
-            System.out.println(edgeLinkedList);
             edgeLinkedList.add(edge);
         });
     }
