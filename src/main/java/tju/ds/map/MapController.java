@@ -22,6 +22,7 @@ import tju.ds.map.model.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static tju.ds.map.MapApplication.stage;
 
@@ -73,33 +74,49 @@ public class MapController {
         vertexIdShapeMap = new HashMap<>();
         for (Vertex vertex : graph.getGraph().keySet()) {
             Circle vertexShape = new Circle(vertex.getX(), vertex.getY(), 6, Color.NAVY);
-            Text vertexText = new Text(vertex.getX() + 5, vertex.getY() + 5, vertex.toString());
-            for (Edge edge : graph.getGraph().get(vertex)) {
-                Vertex v = graph.getVertices().get(edge.getVId());
-                Double[] points = new Double[]{
-                        (double) vertex.getX(), (double) (vertex.getY() - 4),
-                        (double) vertex.getX(), (double) (vertex.getY() + 4),
-                        (double) v.getX(), (double) (v.getY() + 4),
-                        (double) v.getX(), (double) (v.getY() - 4)
-                };
-                Polygon edgeShape = new Polygon();
-                edgeShape.getPoints().addAll(points);
-                edgeShape.setFill(Color.DARKGRAY);
-                Circle edgeMid = new Circle(
-                        (vertex.getX() + v.getX()) / 2.0,
-                        (vertex.getY() + v.getY()) / 2.0,
-                        4, Color.BLACK);
-                Text edgeText = new Text(
-                        (vertex.getX() + v.getX()) / 2.0 + 5, (vertex.getY() + v.getY()) / 2.0 + 5,
-                        edge.getName());
-                edgeShape.setOnMouseEntered(event -> edgeText.setText(edge.toString()));
-                edgeShape.setOnMouseExited(event -> edgeText.setText(edge.getName()));
-                mapPane.getChildren().addAll(edgeShape, edgeMid, edgeText);
-                edgeIdShapeMap.put(edge.getId(), edgeShape);
-            }
+            Text vertexText = new Text(vertex.getX() + 6, vertex.getY() + 6, vertex.toString());
             mapPane.getChildren().addAll(vertexShape, vertexText);
             vertexIdShapeMap.put(vertex.getId(), vertexShape);
         }
-        vertexIdShapeMap.values().forEach(Node::toFront);
+        HashSet<Edge> paintedEdge = new HashSet<>();
+        for (Edge edge : graph.getEdges().values()) {
+            Vertex u = graph.getVertices().get(edge.getUId());
+            Vertex v = graph.getVertices().get(edge.getVId());
+            if (paintedEdge.contains(edge)) continue;
+            paintedEdge.add(edge);
+            Double[] points = new Double[]{
+                    (double) u.getX(), (double) (u.getY() - 4),
+                    (double) u.getX(), (double) (u.getY() + 4),
+                    (double) v.getX(), (double) (v.getY() + 4),
+                    (double) v.getX(), (double) (v.getY() - 4)
+            };
+            Polygon edgeShape = new Polygon();
+            edgeShape.getPoints().addAll(points);
+            edgeShape.setFill(Color.DARKGRAY);
+            Circle edgeMid = new Circle(
+                    (u.getX() + v.getX()) / 2.0,
+                    (u.getY() + v.getY()) / 2.0,
+                    4, Color.BLACK);
+            Text edgeText = new Text(
+                    (u.getX() + v.getX()) / 2.0 + 5, (u.getY() + v.getY()) / 2.0 + 5,
+                    edge.getName());
+            edgeShape.setOnMouseEntered(event -> edgeText.setText(edge.toString()));
+            edgeShape.setOnMouseExited(event -> edgeText.setText(edge.getName()));
+            edgeMid.setOnMouseEntered(event -> edgeText.setText(edge.toString()));
+            edgeMid.setOnMouseExited(event -> edgeText.setText(edge.getName()));
+            mapPane.getChildren().addAll(edgeShape, edgeMid, edgeText);
+            edgeIdShapeMap.put(edge.getId(), edgeShape);
+        }
+        edgeIdShapeMap.values().forEach(Node::toBack);
+    }
+
+    private ArrayList<Edge> findNearestDistance(Vertex start, Vertex stop) {
+        ArrayList<Edge> result = new ArrayList<>();
+        return result;
+    }
+
+    private ArrayList<Edge> findShortestTime(Vertex start, Vertex stop) {
+        ArrayList<Edge> result = new ArrayList<>();
+        return result;
     }
 }

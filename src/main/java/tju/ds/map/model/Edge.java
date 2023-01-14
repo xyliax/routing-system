@@ -42,6 +42,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return String.format("%s-全长%.1f-限速%.1f-路况%s", name, distance, limit, condition.info);
+        return String.format("%s-全长%.1f-限速%.1f(km/h)%n路况%s", name, distance, limit, condition.info);
     }
 }
