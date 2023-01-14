@@ -73,6 +73,17 @@ public final class MongoController {
         return Vertex.fromDocument(vertexDoc);
     }
 
+    public boolean deleteVertex(Vertex vertex) {
+        ObjectId vertexId = new ObjectId(vertex.getId());
+        DeleteResult result = vertices.deleteOne(new Document("_id", vertexId));
+        return result.getDeletedCount() > 0;
+    }
+    public boolean updateVertex(Vertex vertex) {
+        ObjectId vertexId = new ObjectId(vertex.getId());
+        UpdateResult result = vertices.replaceOne(new Document("_id", vertexId), vertex.toDocument());
+        return result.getModifiedCount() > 0;
+    }
+
     public ArrayList<Vertex> retrieveAllVertices() {
         ArrayList<Document> documents = vertices.find().into(new ArrayList<>());
         ArrayList<Vertex> vertexArrayList = new ArrayList<>();
@@ -85,6 +96,12 @@ public final class MongoController {
         edges.insertOne(edgeDoc);
     }
 
+    public boolean deleteEdge(Edge edge) {
+        ObjectId edgeId = new ObjectId(edge.getId());
+        DeleteResult result = edges.deleteOne(new Document("_id", edgeId));
+        return result.getDeletedCount() > 0;
+    }
+
     public Edge retrieveEdge(String name) {
         Document edgeDoc = edges.find(new Document("name", name)).first();
         return Edge.fromDocument(edgeDoc);
@@ -95,6 +112,11 @@ public final class MongoController {
         ArrayList<Edge> edgeArrayList = new ArrayList<>();
         documents.forEach(document -> edgeArrayList.add(Edge.fromDocument(document)));
         return edgeArrayList;
+    }
+    public boolean updateEdge(Edge edge) {
+        ObjectId edgeId = new ObjectId(edge.getId());
+        UpdateResult result = edges.replaceOne(new Document("_id", edgeId), edge.toDocument());
+        return result.getModifiedCount() > 0;
     }
 
     private static final class MongoControllerHolder {
