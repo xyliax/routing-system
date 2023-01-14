@@ -11,17 +11,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
 import tju.ds.map.model.User;
-
-import java.io.IOException;
+import tju.ds.map.model.UserType;
 
 import static tju.ds.map.MapApplication.stage;
 
 public class LoginController {
+    static User user = null;
     private final MongoController mongoController = MongoController.getInstance();
+    @FXML
+    private ImageView loginLogo;
     @FXML
     private Button loginButton;
     @FXML
@@ -30,12 +32,29 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private ImageView loginLogo;
 
-    public static Scene scene() throws IOException {
+    @SneakyThrows
+    public static Scene scene() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("login.fxml"));
         return new Scene(fxmlLoader.load());
+    }
+
+    @FXML
+    public void initialize() {
+        registerButton.setOnMouseClicked(event -> stage.setScene(RegisterController.scene()));
+        registerButton.setOnMouseEntered(event -> registerButton.setText("点我注册！"));
+        registerButton.setOnMouseExited(event -> registerButton.setText("新用户？"));
+        usernameField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                if (passwordField.getText().length() != 0)
+                    onLoginButtonClicked(null);
+                else passwordField.requestFocus();
+            }
+        });
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)
+                onLoginButtonClicked(null);
+        });
     }
 
     @FXML
@@ -53,38 +72,18 @@ public class LoginController {
                 usernameField.setPromptText("找不到该用户！！！");
                 new Wobble(loginLogo).play();
             } else if (!password.equals(user.getPassword())) {
-                usernameField.clear();
                 passwordField.clear();
-                usernameField.setPromptText("密码错误！！！");
+                passwordField.setPromptText("密码错误！！！");
                 new Wobble(loginLogo).play();
             } else {
-                //TODO: success
-                MapController.user = user;
-                stage.setScene(AdminController.scene());
-                //stage.setScene(MapController.scene());
+                LoginController.user = user;
+                if (user.getType() == UserType.ADMIN)
+                    stage.setScene(AdminController.scene());
+                else stage.setScene(MapController.scene());
             }
             loginButton.setText(text);
+            loginLogo.requestFocus();
         });
         loginAnimation.play();
-    }
-
-    @FXML
-    protected void onRegisterButtonClicked(MouseEvent mouseEvent) throws IOException {
-        stage.setScene(RegisterController.scene());
-    }
-
-    @FXML
-    protected void onUsernameFieldKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            if (passwordField.getText().length() != 0)
-                onLoginButtonClicked(null);
-            else passwordField.requestFocus();
-        }
-    }
-
-    @FXML
-    protected void onPasswordFieldKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER)
-            onLoginButtonClicked(null);
     }
 }

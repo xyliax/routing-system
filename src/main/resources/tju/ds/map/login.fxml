@@ -12,7 +12,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19"
             fx:controller="tju.ds.map.LoginController">
     <top>
-        <AnchorPane fx:id="titlePane" prefHeight="200.0" prefWidth="200.0"
+        <AnchorPane prefHeight="200.0" prefWidth="200.0"
                     style="-fx-background-color: linear-gradient(to top,#5694cd,#92bbd2);"
                     BorderPane.alignment="CENTER">
             <children>
@@ -30,11 +30,11 @@
         </AnchorPane>
     </top>
     <right>
-        <AnchorPane fx:id="loginPane" style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
+        <AnchorPane style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
                     BorderPane.alignment="CENTER">
             <children>
-                <VBox alignment="CENTER" layoutY="17.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0"
-                      AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                <VBox alignment="CENTER" layoutY="17.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
                             <children>
@@ -49,8 +49,7 @@
                                         <Blend/>
                                     </effect>
                                 </Label>
-                                <TextField fx:id="usernameField" minWidth="300.0"
-                                           onKeyPressed="#onUsernameFieldKeyPressed" prefHeight="80.0" prefWidth="300.0"
+                                <TextField fx:id="usernameField" prefHeight="80.0" prefWidth="250.0"
                                            promptText="请输入用户名" style="-fx-background-color: #CCC8B9;">
                                     <font>
                                         <Font name="Yuanti SC Regular" size="24.0"/>
@@ -59,10 +58,10 @@
                                         <Blend/>
                                     </effect>
                                 </TextField>
-                                <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false"
-                                        onMouseClicked="#onRegisterButtonClicked" prefHeight="80.0" prefWidth="120.0"
+                                <Button fx:id="registerButton" alignment="CENTER" minWidth="120.0"
+                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0"
                                         style="-fx-background-radius: 0 20 20 0; -fx-background-color: linear-gradient(to left,#5da007,#8ac184);"
-                                        text="新用户" textAlignment="CENTER" textFill="#832323">
+                                        text="新用户？" textAlignment="CENTER" textFill="#832323">
                                     <cursor>
                                         <Cursor fx:constant="HAND"/>
                                     </cursor>
@@ -90,8 +89,8 @@
                                         <Blend/>
                                     </effect>
                                 </Label>
-                                <PasswordField fx:id="passwordField" onKeyPressed="#onPasswordFieldKeyPressed"
-                                               prefHeight="80.0" prefWidth="420.0" promptText="请输入密码"
+                                <PasswordField fx:id="passwordField" prefHeight="80.0" prefWidth="400.0"
+                                               promptText="请输入密码"
                                                style="-fx-background-radius: 0 20 20 0; -fx-background-color: #CCC8B9;">
                                     <font>
                                         <Font name="Yuanti SC Regular" size="24.0"/>
@@ -126,7 +125,7 @@
         </AnchorPane>
     </right>
     <left>
-        <AnchorPane fx:id="logoPane" style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
+        <AnchorPane style="-fx-background-color: linear-gradient(to bottom,#5694cd,#92bbd2);"
                     BorderPane.alignment="CENTER">
             <children>
                 <ImageView layoutX="100.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true"

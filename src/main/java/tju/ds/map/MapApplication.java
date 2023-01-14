@@ -5,8 +5,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import tju.ds.map.dao.MongoController;
 
-import java.io.IOException;
-
 public final class MapApplication extends Application {
     public static Stage stage;
 
@@ -15,7 +13,8 @@ public final class MapApplication extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
+        primaryStage.requestFocus();
         primaryStage.setTitle("路面导航系统");
         Image logoImage = new Image("tju-logo.png");
         primaryStage.getIcons().add(logoImage);

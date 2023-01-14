@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +15,6 @@ import tju.ds.map.model.User;
 import tju.ds.map.model.UserType;
 
 import java.io.IOException;
-import java.nio.Buffer;
 
 import static tju.ds.map.MapApplication.stage;
 
@@ -51,7 +49,8 @@ public class AdminController {
             if (user == null) {
                 usernameField.clear();
                 passwordField.clear();
-                usernameField.setText("找不到该用户！！！");
+                BackButton.requestFocus();
+                usernameField.setPromptText("找不到该用户！！！");
                 adminButton.setSelected(false);
             } else {
                 passwordField.setText(user.getPassword());
@@ -61,19 +60,19 @@ public class AdminController {
     }
 
     @FXML
-    protected void OnSaveButtonClicked(MouseEvent mouseEvent){
+    protected void OnSaveButtonClicked(MouseEvent mouseEvent) {
         user.setUsername(usernameField.getText());
-        user.setPassword(passwordField.getText());//好像没用
-        if(adminButton.isSelected()){
+        user.setPassword(passwordField.getText());
+        if (adminButton.isSelected()) {
             user.setType(UserType.ADMIN);
-        }else{user.setType(UserType.NORMAL);}
+        } else {
+            user.setType(UserType.NORMAL);
+        }
         mongoController.updateUser(user);
     }
 
     @FXML
     protected void OnBackButtonClicked(MouseEvent mouseEvent) throws IOException {
-        stage.setScene(LoginController.scene());//这个 只能点一下别的之后管用 不动别的直接点的话没用emm 为啥 后来youyongle
+        stage.setScene(LoginController.scene());
     }
-
-
 }

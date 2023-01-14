@@ -30,4 +30,9 @@ public class Vertex {
                 .append("x", String.valueOf(x))
                 .append("y", String.valueOf(y));
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%d,%d)", name, x, y);
+    }
 }

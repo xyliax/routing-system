@@ -11,7 +11,8 @@ public class User {
     private String username;
     private String password;
     private UserType type;
-    private String avatar;
+    private String mobile;
+    private String email;
     private String bio;
 
     public static User fromDocument(Document document) {
@@ -21,7 +22,8 @@ public class User {
                     (String) document.get("username"),
                     (String) document.get("password"),
                     UserType.valueOf((String) document.getOrDefault("type", "UNKNOWN")),
-                    (String) document.get("avatar"),
+                    (String) document.get("mobile"),
+                    (String) document.get("email"),
                     (String) document.get("bio"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,7 +35,8 @@ public class User {
         return new Document("username", username)
                 .append("password", password)
                 .append("type", type.name())
-                .append("avatar", avatar)
+                .append("mobile", mobile)
+                .append("email", email)
                 .append("bio", bio);
     }
 }
