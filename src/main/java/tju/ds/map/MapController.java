@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MapController {
+    static Graph graph;
     private final MongoController mongoController = MongoController.getInstance();
-    private static Graph graph;
     private HashMap<String, Polygon> edgeIdShapeMap;
     private HashMap<String, Circle> vertexIdShapeMap;
     @FXML
