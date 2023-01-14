@@ -7,10 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +34,8 @@ public class AdminController {
     private TextField mobileField;
     @FXML
     private TextField emailField;
+    @FXML
+    private TextArea bioArea;
     @FXML
     private CheckBox adminButton;
     @FXML
@@ -138,6 +137,9 @@ public class AdminController {
             if (user == null) {
                 usernameField1.clear();
                 passwordField.clear();
+                mobileField.clear();
+                emailField.clear();
+                bioArea.clear();
                 usernameField1.setPromptText("找不到该用户！！！");
                 backButton.requestFocus();
                 adminButton.setSelected(false);
@@ -145,6 +147,7 @@ public class AdminController {
                 passwordField.setText(user.getPassword());
                 mobileField.setText(user.getMobile());
                 emailField.setText(user.getEmail());
+                bioArea.setText(user.getBio());
                 adminButton.setSelected(user.getType() == UserType.ADMIN);
             }
         }
@@ -159,6 +162,7 @@ public class AdminController {
                 user.setPassword(passwordField.getText());
                 user.setEmail(emailField.getText());
                 user.setMobile(mobileField.getText());
+                user.setBio(bioArea.getText());
                 if (adminButton.isSelected()) {
                     user.setType(UserType.ADMIN);
                 } else {
@@ -167,7 +171,7 @@ public class AdminController {
                 mongoController.updateUser(user);
                 userSaveButton.setText("保存成功!");
             } else {
-                User newUser = new User(null, usernameField1.getText(), passwordField.getText(), UserType.NORMAL, mobileField.getText(), emailField.getText(), null);
+                User newUser = new User(null, usernameField1.getText(), passwordField.getText(), UserType.NORMAL, mobileField.getText(), emailField.getText(), bioArea.getText());
                 if (adminButton.isSelected()) {
                     newUser.setType(UserType.ADMIN);
                 } else {
@@ -226,6 +230,7 @@ public class AdminController {
                 v_edgeField.clear();
                 distanceField.clear();
                 limitField.clear();
+                radioButtonSelected = null;
                 edgeField.setPromptText("不存在这条路！！！");
                 backButton.requestFocus();
             } else {
@@ -233,7 +238,22 @@ public class AdminController {
                 v_edgeField.setText(graph.getVertices().get(edge.getVId()).getName());
                 distanceField.setText("" + edge.getDistance());
                 limitField.setText("" + edge.getLimit());
-                //道路情况
+                if (edge.getCondition() == EdgeCondition.BAD) {
+                    radioButton1.setSelected(true);
+                    radioButtonSelected = radioButton1;
+                } else if (edge.getCondition() == EdgeCondition.CROWDED) {
+                    radioButton2.setSelected(true);
+                    radioButtonSelected = radioButton2;
+                } else if (edge.getCondition() == EdgeCondition.MEDIUM) {
+                    radioButton3.setSelected(true);
+                    radioButtonSelected = radioButton3;
+                } else if (edge.getCondition() == EdgeCondition.WELL) {
+                    radioButton4.setSelected(true);
+                    radioButtonSelected = radioButton4;
+                } else if (edge.getCondition() == EdgeCondition.PERFECT) {
+                    radioButton5.setSelected(true);
+                    radioButtonSelected = radioButton5;
+                }
             }
         }
     }
@@ -242,16 +262,23 @@ public class AdminController {
     public void OnEdgeSaveButtonClicked(MouseEvent mouseEvent) {
         Animation loginAnimation = new FlipInX(edgeSaveButton).getTimeline();
         loginAnimation.setOnFinished(event -> {
+            EdgeCondition eCondition = EdgeCondition.UNKNOWN;
+            if (radioButtonSelected == radioButton1) eCondition = EdgeCondition.BAD;
+            else if (radioButtonSelected == radioButton2) eCondition = EdgeCondition.CROWDED;
+            else if (radioButtonSelected == radioButton3) eCondition = EdgeCondition.MEDIUM;
+            else if (radioButtonSelected == radioButton4) eCondition = EdgeCondition.WELL;
+            else if (radioButtonSelected == radioButton5) eCondition = EdgeCondition.PERFECT;
             if (edge != null) {
                 edge.setName(edgeField.getText());
-                edge.setUId(u_edgeField.getText());
-                edge.setVId(v_edgeField.getText());
+                edge.setUId(mongoController.retrieveVertex(u_edgeField.getText()).getId());
+                edge.setVId(mongoController.retrieveVertex(v_edgeField.getText()).getId());
                 edge.setDistance(Double.parseDouble(distanceField.getText()));
-                edge.setLimit(Double.parseDouble(limitField.getText()));//状况!!
+                edge.setLimit(Double.parseDouble(limitField.getText()));
+                edge.setCondition(eCondition);
                 mongoController.updateEdge(edge);
                 edgeSaveButton.setText("保存成功!");
             } else {
-                Edge newEdge = new Edge(null, edgeField.getText(), u_edgeField.getText(), v_edgeField.getText(), Double.parseDouble(distanceField.getText()), Double.parseDouble(limitField.getText()), EdgeCondition.UNKNOWN);
+                Edge newEdge = new Edge(null, edgeField.getText(), u_edgeField.getText(), v_edgeField.getText(), Double.parseDouble(distanceField.getText()), Double.parseDouble(limitField.getText()), eCondition);
                 mongoController.insertEdge(newEdge);
                 edgeSaveButton.setText("新建成功!");
             }
