@@ -68,6 +68,11 @@ public final class MongoController {
         vertices.insertOne(vertexDoc);
     }
 
+    public Vertex retrieveVertex(String name) {
+        Document vertexDoc = vertices.find(new Document("name", name)).first();
+        return Vertex.fromDocument(vertexDoc);
+    }
+
     public ArrayList<Vertex> retrieveAllVertices() {
         ArrayList<Document> documents = vertices.find().into(new ArrayList<>());
         ArrayList<Vertex> vertexArrayList = new ArrayList<>();
@@ -78,6 +83,11 @@ public final class MongoController {
     public void insertEdge(Edge edge) {
         Document edgeDoc = edge.toDocument();
         edges.insertOne(edgeDoc);
+    }
+
+    public Edge retrieveEdge(String name) {
+        Document edgeDoc = edges.find(new Document("name", name)).first();
+        return Edge.fromDocument(edgeDoc);
     }
 
     public ArrayList<Edge> retrieveAllEdges() {
