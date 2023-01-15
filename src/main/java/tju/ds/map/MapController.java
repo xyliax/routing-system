@@ -312,11 +312,19 @@ public class MapController {
             Vertex v = formedGraph.getVertices().get(edge.getVId());
             if (paintedEdge.contains(edge)) continue;
             paintedEdge.add(edge);
+            double dx = Math.sqrt(9 / (Math.pow(((double) (u.getX() - v.getX())) / (u.getY() - v.getY()), 2) + 1));
+            double dy = ((double) (u.getX() - v.getX())) / (u.getY() - v.getY()) * dx;
+            dx = Math.abs(dx);
+            dy = Math.abs(dy);
+            if (dx * (u.getY() - v.getY()) == dy * (u.getX() - v.getX())) dx = -dx;
+            System.out.println(dx);
+            System.out.println(dy);
+            System.out.println(edge);
             Double[] points = new Double[]{
-                    (double) u.getX(), (double) (u.getY() - 4),
-                    (double) u.getX(), (double) (u.getY() + 4),
-                    (double) v.getX(), (double) (v.getY() + 4),
-                    (double) v.getX(), (double) (v.getY() - 4)
+                    (double) u.getX() - dx, (double) u.getY() - dy,
+                    (double) u.getX() + dx, (double) u.getY() + dy,
+                    (double) v.getX() + dx, (double) v.getY() + dy,
+                    (double) v.getX() - dx, (double) v.getY() - dy
             };
             Polygon edgeShape = new Polygon();
             edgeShape.getPoints().addAll(points);

@@ -223,16 +223,25 @@ public class AdminController {
     protected void onVertexSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(vertexSaveButton).getTimeline();
         loginAnimation.setOnFinished(event -> {
-            if (vertex != null) {
-                vertex.setName(vertexField.getText());
-                vertex.setX(Integer.parseInt(x_vertexField.getText()));
-                vertex.setY(Integer.parseInt(y_vertexField.getText()));
-                mongoController.updateVertex(vertex);
-                vertexSaveButton.setText("保存成功!");
-            } else {
-                Vertex newVertex = new Vertex(null, vertexField.getText(), Integer.parseInt(x_vertexField.getText()), Integer.parseInt(y_vertexField.getText()));
-                mongoController.insertVertex(newVertex);
-                vertexSaveButton.setText("新建成功!");
+            String name = vertexField.getText();
+            try {
+                int x = Integer.parseInt(x_vertexField.getText());
+                int y = Integer.parseInt(y_vertexField.getText());
+                vertex = mongoController.retrieveVertex(name);
+                if (vertex != null) {
+                    vertex.setName(vertexField.getText());
+                    vertex.setX(x);
+                    vertex.setY(y);
+                    mongoController.updateVertex(vertex);
+                    vertexSaveButton.setText("保存成功!");
+                } else {
+                    Vertex newVertex = new Vertex(null, name, x, y);
+                    mongoController.insertVertex(newVertex);
+                    vertexSaveButton.setText("新建成功!");
+                }
+            } catch (Exception exception) {
+                x_vertexField.clear();
+                y_vertexField.clear();
             }
         });
         loginAnimation.play();
@@ -287,7 +296,7 @@ public class AdminController {
     }
 
     @FXML
-    protected void OnEdgeSaveButtonClicked() {
+    protected void onEdgeSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(edgeSaveButton).getTimeline();
         loginAnimation.setOnFinished(event -> {
             EdgeCondition eCondition = EdgeCondition.UNKNOWN;
@@ -313,6 +322,12 @@ public class AdminController {
             if (Double.parseDouble(distanceField.getText()) <= 0) {
                 distanceField.clear();
                 distanceField.setPromptText("距离不能为负！");
+                edge = null;
+                return;
+            }
+            if (Double.parseDouble(limitField.getText()) <= 0) {
+                limitField.clear();
+                limitField.setPromptText("限速不能为负！");
                 edge = null;
                 return;
             }

@@ -78,7 +78,7 @@
                                                 style="-fx-background-radius: 40 40 40 40; -fx-background-color: #95d7d5;"
                                                 text="显示路径" textAlignment="CENTER">
                                             <font>
-                                                <Font name="Yuanti SC Regular" size="16.0"/>
+                                                <Font name="Yuanti SC Regular" size="14.0"/>
                                             </font>
                                             <cursor>
                                                 <Cursor fx:constant="HAND"/>
@@ -89,7 +89,7 @@
                                                 style="-fx-background-radius: 40 40 40 40; -fx-background-color: #95d7d5;"
                                                 text="显示所有" textAlignment="CENTER">
                                             <font>
-                                                <Font name="Yuanti SC Regular" size="16.0"/>
+                                                <Font name="Yuanti SC Regular" size="14.0"/>
                                             </font>
                                             <cursor>
                                                 <Cursor fx:constant="HAND"/>

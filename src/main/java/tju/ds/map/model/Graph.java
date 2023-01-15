@@ -7,8 +7,12 @@ import java.util.HashMap;
 
 @Data
 public class Graph {
-    HashMap<String, Vertex> vertices;
-    HashMap<String, Edge> edges;
+    HashMap<String, Vertex> vertices; //节点id映射到对应节点的哈希表
+    HashMap<String, Edge> edges; //道路id映射到对应道路的哈希表
+    /*
+    graph为二重哈希表，第一层是节点对其所连接的道路集合的映射，第二层是其连接的道路集合，
+    道路集合是道路的另一个节点映射到对应道路的集合
+     */
     HashMap<Vertex, HashMap<String, Edge>> graph;
 
     public Graph(ArrayList<Vertex> vertexArrayList, ArrayList<Edge> edgeArrayList) {

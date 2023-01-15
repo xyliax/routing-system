@@ -15,7 +15,7 @@
                         style="-fx-background-color: linear-gradient(to top,#5694cd,#92bbd2);"
                         BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="loginLogo" fitHeight="80.0" fitWidth="135.0" layoutX="221.0" layoutY="27.0"
+                  <ImageView fitHeight="80.0" fitWidth="135.0" layoutX="221.0" layoutY="27.0"
                              pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="20.0">
                      <image>
                         <Image url="@../../../login-logo.png"/>
@@ -390,7 +390,7 @@
                                              </VBox.margin>
                                           </Button>
                                           <Button fx:id="edgeSaveButton" mnemonicParsing="false"
-                                                  onMouseClicked="#OnEdgeSaveButtonClicked" prefHeight="30.0"
+                                                  onMouseClicked="#onEdgeSaveButtonClicked" prefHeight="30.0"
                                                   prefWidth="159.0" style="-fx-background-radius: 20 20 20 20;"
                                                   text="保存/新建">
                                              <font>

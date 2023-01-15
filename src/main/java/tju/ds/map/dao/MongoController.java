@@ -39,6 +39,8 @@ public final class MongoController {
         this.vertices = database.getCollection("vertices");
         this.edges = database.getCollection("edges");
         users.createIndex(Indexes.ascending("username"), new IndexOptions().unique(true));
+        vertices.createIndex(Indexes.ascending("name"), new IndexOptions().unique(true));
+        edges.createIndex(Indexes.ascending("name"), new IndexOptions().unique(true));
     }
 
     public void insertUser(User user) {
@@ -78,6 +80,7 @@ public final class MongoController {
         DeleteResult result = vertices.deleteOne(new Document("_id", vertexId));
         return result.getDeletedCount() > 0;
     }
+
     public boolean updateVertex(Vertex vertex) {
         ObjectId vertexId = new ObjectId(vertex.getId());
         UpdateResult result = vertices.replaceOne(new Document("_id", vertexId), vertex.toDocument());
@@ -113,6 +116,7 @@ public final class MongoController {
         documents.forEach(document -> edgeArrayList.add(Edge.fromDocument(document)));
         return edgeArrayList;
     }
+
     public boolean updateEdge(Edge edge) {
         ObjectId edgeId = new ObjectId(edge.getId());
         UpdateResult result = edges.replaceOne(new Document("_id", edgeId), edge.toDocument());
