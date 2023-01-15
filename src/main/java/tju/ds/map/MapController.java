@@ -269,8 +269,8 @@ public class MapController {
             for (String nextId : currentEdges.keySet()) {
                 Vertex next = formedGraph.getVertices().get(nextId);
                 Edge toNext = currentEdges.get(nextId);
-                if (time.get(current) + toNext.getDistance() < time.get(next)) {
-                    time.put(next, time.get(current) + toNext.getDistance());
+                if (time.get(current) + toNext.timeCost() < time.get(next)) {
+                    time.put(next, time.get(current) + toNext.timeCost());
                     precursor.put(next, current);
                     priorityQueue.add(next);
                 }
@@ -317,6 +317,10 @@ public class MapController {
             dx = Math.abs(dx);
             dy = Math.abs(dy);
             if (dx * (u.getY() - v.getY()) == dy * (u.getX() - v.getX())) dx = -dx;
+            if (Double.isNaN(dy)) {
+                dy = 3;
+                dx = 3;
+            }
             System.out.println(dx);
             System.out.println(dy);
             System.out.println(edge);

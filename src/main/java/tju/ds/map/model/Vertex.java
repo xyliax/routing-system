@@ -15,16 +15,11 @@ public class Vertex {
     int y;
 
     public static Vertex fromDocument(Document document) {
-        try {
-            if (document == null) return null;
-            return new Vertex(document.get("_id").toString(),
-                    (String) document.get("name"),
-                    Integer.parseInt((String) document.get("x")),
-                    Integer.parseInt((String) document.get("y")));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        if (document == null) return null;
+        return new Vertex(document.get("_id").toString(),
+                (String) document.get("name"),
+                Integer.parseInt((String) document.get("x")),
+                Integer.parseInt((String) document.get("y")));
     }
 
     public Document toDocument() {

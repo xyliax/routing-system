@@ -16,19 +16,14 @@ public class Edge {
     EdgeCondition condition;
 
     public static Edge fromDocument(Document document) {
-        try {
-            if (document == null) return null;
-            return new Edge(document.get("_id").toString(),
-                    (String) document.get("name"),
-                    (String) document.get("uid"),
-                    (String) document.get("vid"),
-                    (double) document.get("distance"),
-                    (double) document.get("limit"),
-                    EdgeCondition.valueOf((String) document.getOrDefault("condition", "MEDIUM")));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        if (document == null) return null;
+        return new Edge(document.get("_id").toString(),
+                (String) document.get("name"),
+                (String) document.get("uid"),
+                (String) document.get("vid"),
+                (double) document.get("distance"),
+                (double) document.get("limit"),
+                EdgeCondition.valueOf((String) document.getOrDefault("condition", "MEDIUM")));
     }
 
     public Document toDocument() {
@@ -41,7 +36,7 @@ public class Edge {
     }
 
     public double timeCost() {
-        return distance/(condition.ratio+1)/6*limit;
+        return distance / ((condition.ratio + 1) / 6.0 * limit);
     }
 
     @Override

@@ -251,8 +251,10 @@ public class AdminController {
     protected void edgeEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER)
             edgeSearch();
-        radioButtonSelected.setSelected(false);
-        radioButtonSelected = null;
+        if (radioButtonSelected != null) {
+            radioButtonSelected.setSelected(false);
+            radioButtonSelected = null;
+        }
     }
 
     @FXML

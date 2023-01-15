@@ -16,19 +16,14 @@ public class User {
     private String bio;
 
     public static User fromDocument(Document document) {
-        try {
-            if (document == null) return null;
-            return new User(document.get("_id").toString(),
-                    (String) document.get("username"),
-                    (String) document.get("password"),
-                    UserType.valueOf((String) document.getOrDefault("type", "UNKNOWN")),
-                    (String) document.get("mobile"),
-                    (String) document.get("email"),
-                    (String) document.get("bio"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        if (document == null) return null;
+        return new User(document.get("_id").toString(),
+                (String) document.get("username"),
+                (String) document.get("password"),
+                UserType.valueOf((String) document.getOrDefault("type", "UNKNOWN")),
+                (String) document.get("mobile"),
+                (String) document.get("email"),
+                (String) document.get("bio"));
     }
 
     public Document toDocument() {
