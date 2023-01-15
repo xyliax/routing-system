@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 
+//用户类，包含数据库自动生成的id、用户名、密码、用户类型（普通用户/管理员）、手机号码、邮箱、简介等
 @Data
 @AllArgsConstructor
 public class User {
@@ -15,6 +16,7 @@ public class User {
     private String email;
     private String bio;
 
+    //从文档里取出用户
     public static User fromDocument(Document document) {
         if (document == null) return null;
         return new User(document.get("_id").toString(),
@@ -26,6 +28,7 @@ public class User {
                 (String) document.get("bio"));
     }
 
+    //保存用户至数据库文档
     public Document toDocument() {
         return new Document("username", username)
                 .append("password", password)

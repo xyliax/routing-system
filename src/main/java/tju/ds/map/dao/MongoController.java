@@ -17,6 +17,12 @@ import tju.ds.map.model.Vertex;
 
 import java.util.ArrayList;
 
+
+/*
+MongoController连接MongoDB在线数据库
+通过对user、vertex和edge的retrieve、insert、update、delete等各种方法，能够实现对数据的增删改查功能
+ */
+
 @Slf4j
 public final class MongoController {
     private static final String CONNECT_STRING = "mongodb://xylia:POLYpyx2020@peiyuxing.xyz/?authSource=test";
@@ -32,6 +38,9 @@ public final class MongoController {
         return MongoControllerHolder.mongoController;
     }
 
+    /*
+   连接数据库，初始化连接并获取用户、节点、道路数据库实例
+     */
     public void connect() {
         MongoClient mongoClient = MongoClients.create(CONNECT_STRING);
         MongoDatabase database = mongoClient.getDatabase(DB_NAME);
@@ -53,16 +62,16 @@ public final class MongoController {
         return User.fromDocument(userDoc);
     }
 
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
         ObjectId userId = new ObjectId(user.getId());
         UpdateResult result = users.replaceOne(new Document("_id", userId), user.toDocument());
-        return result.getModifiedCount() > 0;
+        result.getModifiedCount();
     }
 
-    public boolean deleteUser(User user) {
+    public void deleteUser(User user) {
         ObjectId userId = new ObjectId(user.getId());
         DeleteResult result = users.deleteOne(new Document("_id", userId));
-        return result.getDeletedCount() > 0;
+        result.getDeletedCount();
     }
 
     public void insertVertex(Vertex vertex) {
@@ -75,16 +84,16 @@ public final class MongoController {
         return Vertex.fromDocument(vertexDoc);
     }
 
-    public boolean deleteVertex(Vertex vertex) {
+    public void deleteVertex(Vertex vertex) {
         ObjectId vertexId = new ObjectId(vertex.getId());
         DeleteResult result = vertices.deleteOne(new Document("_id", vertexId));
-        return result.getDeletedCount() > 0;
+        result.getDeletedCount();
     }
 
-    public boolean updateVertex(Vertex vertex) {
+    public void updateVertex(Vertex vertex) {
         ObjectId vertexId = new ObjectId(vertex.getId());
         UpdateResult result = vertices.replaceOne(new Document("_id", vertexId), vertex.toDocument());
-        return result.getModifiedCount() > 0;
+        result.getModifiedCount();
     }
 
     public ArrayList<Vertex> retrieveAllVertices() {
@@ -99,10 +108,10 @@ public final class MongoController {
         edges.insertOne(edgeDoc);
     }
 
-    public boolean deleteEdge(Edge edge) {
+    public void deleteEdge(Edge edge) {
         ObjectId edgeId = new ObjectId(edge.getId());
         DeleteResult result = edges.deleteOne(new Document("_id", edgeId));
-        return result.getDeletedCount() > 0;
+        result.getDeletedCount();
     }
 
     public Edge retrieveEdge(String name) {
@@ -117,10 +126,10 @@ public final class MongoController {
         return edgeArrayList;
     }
 
-    public boolean updateEdge(Edge edge) {
+    public void updateEdge(Edge edge) {
         ObjectId edgeId = new ObjectId(edge.getId());
         UpdateResult result = edges.replaceOne(new Document("_id", edgeId), edge.toDocument());
-        return result.getModifiedCount() > 0;
+        result.getModifiedCount();
     }
 
     private static final class MongoControllerHolder {

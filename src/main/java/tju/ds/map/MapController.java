@@ -32,13 +32,24 @@ import java.util.*;
 import static tju.ds.map.LoginController.user;
 import static tju.ds.map.MapApplication.stage;
 
+
+/*
+MapController控制map.fxml页面，为地图导航界面
+能够实现显示地图，显示、修改保存用户信息，输入导航起始点和终点、指定寻路方式（最快/最短），并在地图上显示寻路结果等功能
+寻路结束后能够导出生成文字寻路结果报告
+ */
+
 public class MapController {
+    //获取实例
     private final MongoController mongoController = MongoController.getInstance();
+    //道路id、道路信息映射到对应道路的哈希表
     private final HashMap<String, Polygon> edgeIdShapeMap = new HashMap<>();
     private final HashMap<String, Text> edgeIdTextMap = new HashMap<>();
+    //节点id、节点信息映射到对应道路的哈希表
     private final HashMap<String, Circle> vertexIdShapeMap = new HashMap<>();
     private final HashMap<String, Text> vertexIdTextMap = new HashMap<>();
     private Graph formedGraph;
+    //fxml中需要控制的控件
     @FXML
     private Label usernameLabel;
     @FXML
@@ -72,12 +83,14 @@ public class MapController {
     @FXML
     private ImageView mapLogo;
 
+    //连接map.fxml界面
     @SneakyThrows
     public static Scene scene() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("map.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
+    //初始化页面。完成简单的控件事件绑定与属性设置
     @FXML
     public void initialize() {
         mapLogo.setOnMouseClicked(event -> stage.setScene(LoginController.scene()));
@@ -150,6 +163,8 @@ public class MapController {
         Platform.runLater(() -> startField.requestFocus());
     }
 
+    // 当用户完成起点、终点、搜索方式的输入后，调用search方法，
+    // 再由用户输入决定所使用的寻路算法，并在算法返回后提供生成详细文字报告的选项
     @FXML
     protected void search() {
         searchButton.setText("正在搜索");
@@ -217,11 +232,16 @@ public class MapController {
         searchAnimation.play();
     }
 
+    /*
+    用迪杰斯特拉算法，求单源最短路
+    本方法采用最短距离，算法详情见报告
+ */
     private ArrayList<Edge> findNearestDistance(Vertex start, Vertex stop) {
-        ArrayList<Edge> result = new ArrayList<>();
-        HashMap<Vertex, Double> distance = new HashMap<>();
-        HashMap<Vertex, Vertex> precursor = new HashMap<>();
-        HashSet<Vertex> visited = new HashSet<>();
+        ArrayList<Edge> result = new ArrayList<>(); //所求的最短路
+        HashMap<Vertex, Double> distance = new HashMap<>(); //维护局部最短距离
+        HashMap<Vertex, Vertex> precursor = new HashMap<>(); //维护当前前驱节点
+        HashSet<Vertex> visited = new HashSet<>(); //当前以访问节点
+        //优先队列，将节点按distance排序
         PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>(Comparator.comparing(distance::get));
         formedGraph.getVertices().values().forEach(vertex -> distance.put(vertex, Double.POSITIVE_INFINITY));
         distance.put(start, 0.0);
@@ -252,11 +272,16 @@ public class MapController {
         return result;
     }
 
+    /*
+用迪杰斯特拉算法，求单源时间最短路
+本方法采用最快时间，算法详情见报告
+*/
     private ArrayList<Edge> findShortestTime(Vertex start, Vertex stop) {
-        ArrayList<Edge> result = new ArrayList<>();
-        HashMap<Vertex, Double> time = new HashMap<>();
-        HashMap<Vertex, Vertex> precursor = new HashMap<>();
-        HashSet<Vertex> visited = new HashSet<>();
+        ArrayList<Edge> result = new ArrayList<>(); //所求的最快路
+        HashMap<Vertex, Double> time = new HashMap<>(); //维护局部最快时间
+        HashMap<Vertex, Vertex> precursor = new HashMap<>(); //维护当前的前驱节点
+        HashSet<Vertex> visited = new HashSet<>(); //当前以访问的节点
+        //优先队列，将节点按time排序
         PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>(Comparator.comparing(time::get));
         formedGraph.getVertices().values().forEach(vertex -> time.put(vertex, Double.POSITIVE_INFINITY));
         time.put(start, 0.0);
@@ -286,7 +311,10 @@ public class MapController {
         Collections.reverse(result);
         return result;
     }
-
+    /*
+   由内存中的graph数据生成javafx组件，在窗口中形成可视化结构图
+   调用一次需要重新访问数据库
+ */
     @FXML
     private void render() {
         mapPane.getChildren().clear();
@@ -303,9 +331,11 @@ public class MapController {
             Text vertexText = new Text(vertex.getX() + 6, vertex.getY() + 6, vertex.toString());
             vertexText.setFill(Color.GREEN);
             mapPane.getChildren().addAll(vertexShape, vertexText);
+            //将vertex和vertex所对应的图形绑定
             vertexIdShapeMap.put(vertex.getId(), vertexShape);
             vertexIdTextMap.put(vertex.getId(), vertexText);
         }
+        //为了避免重复渲染，重复边只会显示一次
         HashSet<Edge> paintedEdge = new HashSet<>();
         for (Edge edge : formedGraph.getEdges().values()) {
             Vertex u = formedGraph.getVertices().get(edge.getUId());
@@ -321,9 +351,6 @@ public class MapController {
                 dy = 3;
                 dx = 3;
             }
-            System.out.println(dx);
-            System.out.println(dy);
-            System.out.println(edge);
             Double[] points = new Double[]{
                     (double) u.getX() - dx, (double) u.getY() - dy,
                     (double) u.getX() + dx, (double) u.getY() + dy,
@@ -342,6 +369,7 @@ public class MapController {
             edgeMid.setOnMouseEntered(event -> edgeText.setText(edge.toString()));
             edgeMid.setOnMouseExited(event -> edgeText.setText(""));
             mapPane.getChildren().addAll(edgeShape, edgeMid, edgeText);
+            //将edge和edge所代表的图形绑定
             edgeIdShapeMap.put(edge.getId(), edgeShape);
             edgeIdTextMap.put(edge.getId(), edgeText);
         }

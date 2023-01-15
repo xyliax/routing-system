@@ -19,7 +19,15 @@ import tju.ds.map.model.UserType;
 
 import static tju.ds.map.MapApplication.stage;
 
+
+/*
+RegisterController控制register.fxml页面，为注册界面
+能够实现注册新用户功能，包括用户名、密码、确认密码、邮箱、手机、个人简介等信息的输入保存功能
+用户名不能与现有用户一致，密码必须大于三位，不能注册空用户
+能够返回至登陆界面
+ */
 public class RegisterController {
+   //fxml中需要控制的控件
     private final MongoController mongoController = MongoController.getInstance();
     @FXML
     private Button registerButton;
@@ -40,12 +48,15 @@ public class RegisterController {
     @FXML
     private ImageView loginLogo;
 
+    //连接register.fxml界面
     @SneakyThrows
     public static Scene scene() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("register.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
+
+    //初始化页面。完成简单的控件事件绑定与属性设置
     @FXML
     public void initialize() {
         backButton.setOnMouseClicked(event -> stage.setScene(LoginController.scene()));
@@ -70,6 +81,7 @@ public class RegisterController {
     public void onRegisterButtonClicked() {
         String text = registerButton.getText();
         registerButton.setText("正在注册...");
+        //注册按钮的动画
         Animation registerAnimation = new FlipInX(registerButton).getTimeline();
         registerAnimation.setOnFinished(event -> {
             String username = usernameField.getText();
@@ -83,16 +95,16 @@ public class RegisterController {
                 passwordField.clear();
                 confirmField.clear();
                 usernameField.setPromptText("用户名不能为空！");
-                new Wobble(loginLogo).play();
+                new Wobble(loginLogo).play();//logo动画
             } else if (password.length() < 3) {
                 passwordField.clear();
                 confirmField.clear();
                 usernameField.setPromptText("密码至少为3个字符！");
-                new Wobble(loginLogo).play();
+                new Wobble(loginLogo).play();//logo动画
             } else if (!password.equals(confirm)) {
                 confirmField.clear();
                 confirmField.setPromptText("请输入相同密码！");
-                new Wobble(loginLogo).play();
+                new Wobble(loginLogo).play();//logo动画
             } else if (mongoController.retrieveUser(username) != null) {
                 usernameField.clear();
                 passwordField.clear();

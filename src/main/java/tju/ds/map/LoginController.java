@@ -18,9 +18,17 @@ import tju.ds.map.model.UserType;
 
 import static tju.ds.map.MapApplication.stage;
 
+
+/*
+LoginController控制login.fxml页面，为登陆界面
+能够实现登陆功能，判断用户是否存在、密码是否正确等功能
+普通用户跳转至地图界面，管理员用户跳转至管理员界面，并能够进入注册界面
+ */
 public class LoginController {
     static User user = null;
+    //获得实例
     private final MongoController mongoController = MongoController.getInstance();
+    //fxml中需要控制的控件
     @FXML
     private ImageView loginLogo;
     @FXML
@@ -32,12 +40,14 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
+    //连接login.fxml界面
     @SneakyThrows
     public static Scene scene() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("login.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
+    //初始化页面。完成简单的控件事件绑定与属性设置
     @FXML
     public void initialize() {
         registerButton.requestFocus();
@@ -57,10 +67,12 @@ public class LoginController {
         });
     }
 
+    //登陆，检验是否存在该用户，检验密码是否错误
     @FXML
     protected void onLoginButtonClicked() {
         String text = loginButton.getText();
         loginButton.setText("正在登录..");
+        //登陆按钮的动画
         Animation loginAnimation = new FlipInX(loginButton).getTimeline();
         loginAnimation.setOnFinished(event -> {
             String username = usernameField.getText();
@@ -70,11 +82,11 @@ public class LoginController {
                 usernameField.clear();
                 passwordField.clear();
                 usernameField.setPromptText("找不到该用户！！！");
-                new Wobble(loginLogo).play();
+                new Wobble(loginLogo).play();//loginlogo动画
             } else if (!password.equals(user.getPassword())) {
                 passwordField.clear();
                 passwordField.setPromptText("密码错误！！！");
-                new Wobble(loginLogo).play();
+                new Wobble(loginLogo).play();//loginlogo动画
             } else {
                 LoginController.user = user;
                 if (user.getType() == UserType.ADMIN)

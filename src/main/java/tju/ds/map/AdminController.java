@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import static tju.ds.map.MapApplication.stage;
 
 /*
-
+AdminController控制admin.fxml页面，为管理员界面
+能够实现对用户、节点、道路的查找、新建、删除、修改等功能
+若输入用户、节点、道路名称为新名称，则新建，若已存在，则保存修改。
  */
 public class AdminController {
     private final MongoController mongoController = MongoController.getInstance();
@@ -28,6 +30,7 @@ public class AdminController {
     private Vertex vertex;
     private Edge edge;
     private RadioButton radioButtonSelected = null;
+    //fxml中需要控制的控件
     @FXML
     private TextField usernameField1;
     @FXML
@@ -89,12 +92,14 @@ public class AdminController {
     @FXML
     private RadioButton radioButton5;
 
+    //连接admin.fxml界面
     @SneakyThrows
     public static Scene scene() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("admin.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
+    //初始化页面。完成简单的控件事件绑定与属性设置
     @FXML
     public void initialize() {
         refreshGraph();
@@ -118,6 +123,7 @@ public class AdminController {
             loginAnimation.play();
             edgeDeleteButton.setText("已删除");
         });
+        //5个radioButton只能选中一个
         EventHandler<ActionEvent> radioHandler = event -> {
             if (radioButtonSelected != null)
                 radioButtonSelected.setSelected(false);
@@ -135,12 +141,14 @@ public class AdminController {
         edgeSearchButton.setOnMouseClicked(event -> edgeSearch());
     }
 
+    //刷新地图
     private void refreshGraph() {
         ArrayList<Vertex> vertexArrayList = mongoController.retrieveAllVertices();
         ArrayList<Edge> edgeArrayList = mongoController.retrieveAllEdges();
         this.graph = new Graph(vertexArrayList, edgeArrayList);
     }
 
+   //在用户名输入框键入回车键，实现用户搜索功能
     @FXML
     protected void userEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER)
@@ -168,9 +176,8 @@ public class AdminController {
         }
     }
 
-    /*
 
-     */
+    //用户保存，若存在该用户则保存修改，若不存在用户则新建用户保存
     @FXML
     protected void onUserSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(userSaveButton).getTimeline();
@@ -198,6 +205,7 @@ public class AdminController {
         loginAnimation.play();
     }
 
+    //在定点名输入框键入回车键，实现定点搜索功能
     @FXML
     public void vertexEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER)
@@ -219,6 +227,7 @@ public class AdminController {
         }
     }
 
+    //节点保存，若存在该节点则保存修改，若不存在节点则新建节点保存
     @FXML
     protected void onVertexSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(vertexSaveButton).getTimeline();
@@ -247,6 +256,7 @@ public class AdminController {
         loginAnimation.play();
     }
 
+    //在道路名输入框键入回车键，实现道路搜索功能
     @FXML
     protected void edgeEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER)
@@ -257,6 +267,7 @@ public class AdminController {
         }
     }
 
+    //道路搜索，根据是否存在该道路，保存按钮更改为"新建"或"更新"
     @FXML
     private void edgeSearch() {
         edge = mongoController.retrieveEdge(edgeField.getText());
@@ -266,6 +277,7 @@ public class AdminController {
             distanceField.clear();
             limitField.clear();
             radioButtonSelected = null;
+            //新建道路才能输入两节点，现有道路不能更改节点
             u_edgeField.setEditable(true);
             v_edgeField.setEditable(true);
             u_edgeField.requestFocus();
@@ -277,6 +289,7 @@ public class AdminController {
             v_edgeField.setEditable(false);
             distanceField.setText(String.valueOf(edge.getDistance()));
             limitField.setText(String.valueOf(edge.getLimit()));
+            //五个radioButton与路况绑定，并保证只能同时选一个按钮
             if (edge.getCondition() == EdgeCondition.BAD) {
                 radioButton1.setSelected(true);
                 radioButtonSelected = radioButton1;
@@ -297,6 +310,8 @@ public class AdminController {
         }
     }
 
+    //道路保存，若存在该道路则保存修改（不能更改节点），若不存在道路则新建道路保存
+    //检验节点是否存在、距离为正数、限速为正数
     @FXML
     protected void onEdgeSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(edgeSaveButton).getTimeline();

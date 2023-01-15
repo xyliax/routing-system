@@ -6,6 +6,7 @@ public enum EdgeCondition {
     public final int ratio;
     public final String info;
 
+    //路况ratio不同，行驶速度和行驶时间不同
     EdgeCondition(int ratio, String info) {
         this.ratio = ratio;
         this.info = info;
