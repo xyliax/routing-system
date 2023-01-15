@@ -1,49 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="720.0" prefWidth="1080.0"
             style="-fx-background-color: linear-gradient(to right,#cfddf0,#95d7d5);" xmlns="http://javafx.com/javafx/19"
             fx:controller="tju.ds.map.MapController">
-   <children>
-      <HBox layoutX="170.0" layoutY="-71.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox prefHeight="400.0" prefWidth="180.0">
-               <children>
-                  <VBox prefHeight="180.0" prefWidth="180.0"
-                        style="-fx-background-color: #f3f3f3; -fx-background-radius: 0 40 40 0;">
-                     <children>
-                        <ImageView fitHeight="189.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../map-logo.png"/>
-                           </image>
-                        </ImageView>
-                        <Label fx:id="usernameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0"
-                               prefWidth="158.0" text="张行樾">
-                           <font>
-                              <Font name="Yuanti SC Regular" size="24.0"/>
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="540.0" prefWidth="180.0"
-                        style="-fx-background-color: #fcfaee; -fx-background-radius: 0 40 40 0;"/>
-               </children>
+    <children>
+        <HBox layoutX="170.0" layoutY="-71.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox prefHeight="400.0" prefWidth="180.0" style="-fx-background-color: #fcfaee;">
+                    <children>
+                        <VBox prefHeight="180.0" prefWidth="180.0"
+                              style="-fx-background-color: #f3f3f3; -fx-background-radius: 40 40 40 40;">
+                            <children>
+                                <ImageView fx:id="mapLogo" fitHeight="189.0" fitWidth="180.0" pickOnBounds="true"
+                                           preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../map-logo.png"/>
+                                    </image>
+                                    <cursor>
+                                        <Cursor fx:constant="CLOSED_HAND"/>
+                                    </cursor>
+                                </ImageView>
+                                <Label fx:id="usernameLabel" alignment="CENTER" contentDisplay="CENTER"
+                                       prefHeight="35.0" prefWidth="183.0">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="24.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <VBox prefHeight="540.0" prefWidth="180.0"
+                              style="-fx-background-color: #fcfaee; -fx-background-radius: 0 40 40 0;">
+                            <children>
+                                <TextField fx:id="mobileField" prefHeight="40.0" prefWidth="120.0"
+                                           promptText="还未设置手机号...">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="14.0"/>
+                                    </font>
+                                </TextField>
+                                <TextField fx:id="emailField" prefHeight="40.0" prefWidth="120.0"
+                                           promptText="还未设置邮箱...">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="14.0"/>
+                                    </font>
+                                </TextField>
+                                <TextArea fx:id="bioArea" opacity="0.6" prefHeight="150.0" prefWidth="200.0"
+                                          promptText="这里空空如也"/>
+                                <Button fx:id="confirmButton" contentDisplay="CENTER" mnemonicParsing="false"
+                                        prefWidth="480.0"
+                                        style="-fx-background-radius: 40 40 40 40; -fx-background-color: #95d7d5;"
+                                        text="点我保存" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="16.0"/>
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets/>
+                                    </VBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND"/>
+                                    </cursor>
+                                </Button>
+                                <HBox>
+                                    <VBox.margin>
+                                        <Insets top="20.0"/>
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="verboseButton" contentDisplay="CENTER" mnemonicParsing="false"
+                                                prefWidth="480.0"
+                                                style="-fx-background-radius: 40 40 40 40; -fx-background-color: #95d7d5;"
+                                                text="显示路径" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="Yuanti SC Regular" size="16.0"/>
+                                            </font>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND"/>
+                                            </cursor>
+                                        </Button>
+                                        <Button fx:id="verboseAllButton" contentDisplay="CENTER" mnemonicParsing="false"
+                                                prefWidth="480.0"
+                                                style="-fx-background-radius: 40 40 40 40; -fx-background-color: #95d7d5;"
+                                                text="显示所有" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="Yuanti SC Regular" size="16.0"/>
+                                            </font>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND"/>
+                                            </cursor>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="40.0" prefWidth="200.0">
+                                    <children>
+                                        <Label prefHeight="40.0" text="起点">
+                                            <font>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="10.0"/>
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="startField" prefHeight="40.0" prefWidth="120.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="40.0" prefWidth="200.0">
+                                    <children>
+                                        <Label prefHeight="40.0" text="终点">
+                                            <font>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="10.0"/>
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="stopField" prefHeight="40.0" prefWidth="120.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                                    <children>
+                                        <CheckBox fx:id="checkbox1" mnemonicParsing="false" text="最短路径"/>
+                                        <CheckBox fx:id="checkbox2" mnemonicParsing="false" text="最少时间"/>
+                                    </children>
+                                </HBox>
+                                <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#search"
+                                        prefHeight="40.0" prefWidth="180.0"
+                                        style="-fx-background-radius: 60 60 60 60; -fx-background-color: #95d7d5;"
+                                        text="开始搜寻">
+                                    <font>
+                                        <Font name="Yuanti SC Regular" size="18.0"/>
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets/>
+                                    </VBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND"/>
+                                    </cursor>
+                                </Button>
+                                <VBox prefHeight="40.0" prefWidth="100.0">
+                                    <children>
+                                        <Button fx:id="saveButton" disable="true" mnemonicParsing="false"
+                                                prefHeight="40.0" prefWidth="180.0"
+                                                style="-fx-background-radius: 60 60 60 60; -fx-background-color: #95d7d5;"
+                                                text="详细报告">
+                                            <font>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
+                                            </font>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND"/>
+                                            </cursor>
+                                            <VBox.margin>
+                                                <Insets top="5.0"/>
+                                            </VBox.margin>
+                                        </Button>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
             </VBox>
             <AnchorPane fx:id="mapPane" prefHeight="720.0" prefWidth="900.0">
                <children>
-                  <ImageView fx:id="refreshLogo" fitHeight="121.0" fitWidth="108.0" layoutX="792.0" pickOnBounds="true"
-                             preserveRatio="true" AnchorPane.bottomAnchor="599.0" AnchorPane.leftAnchor="792.0"
-                             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <image>
-                        <Image url="@../../../refresh.png"/>
-                     </image>
-                  </ImageView>
+                   <ImageView fx:id="refreshLogo" fitHeight="121.0" fitWidth="108.0" layoutX="792.0" pickOnBounds="true"
+                              preserveRatio="true" AnchorPane.bottomAnchor="599.0" AnchorPane.leftAnchor="792.0"
+                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                       <image>
+                           <Image url="@../../../refresh.png"/>
+                       </image>
+                       <cursor>
+                           <Cursor fx:constant="HAND"/>
+                       </cursor>
+                   </ImageView>
                </children>
             </AnchorPane>
          </children>

@@ -40,7 +40,7 @@
                         <AnchorPane prefHeight="80.0" prefWidth="483.0">
                            <children>
                               <CheckBox fx:id="adminButton" layoutX="390.0" layoutY="62.0" mnemonicParsing="false"
-                                        text="管理员">
+                                        text="管理员" AnchorPane.bottomAnchor="0.0">
                                  <font>
                                     <Font size="24.0"/>
                                  </font>
@@ -66,15 +66,25 @@
                                     <Blend/>
                                  </effect>
                               </TextField>
+                              <Button fx:id="userSearchButton" layoutX="371.0" layoutY="25.0" mnemonicParsing="false"
+                                      prefHeight="30.0" prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                      text="搜索用户" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="375.0"
+                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                 <font>
+                                    <Font name="Yuanti SC Regular" size="24.0"/>
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="0.0" prefWidth="483.0">
                            <children>
                               <Button fx:id="userDeleteButton" layoutX="376.0" layoutY="37.0" mnemonicParsing="false"
-                                      prefHeight="60.0" prefWidth="146.0" text="删除用户" textFill="RED"
-                                      AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="30.0">
+                                      prefHeight="60.0" prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                      text="删除用户" textFill="RED" AnchorPane.bottomAnchor="5.0"
+                                      AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="30.0">
                                  <font>
-                                    <Font size="24.0"/>
+                                    <Font name="Yuanti SC Regular" size="24.0"/>
                                  </font>
                               </Button>
                               <Label alignment="CENTER" layoutX="-8.0" layoutY="24.0" prefHeight="60.0"
@@ -154,10 +164,10 @@
                         <AnchorPane prefHeight="0.0" prefWidth="483.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="-8.0"
-                                     layoutY="72.0" prefHeight="40.0" prefWidth="500.0"
+                                     layoutY="72.0" prefHeight="0.0" prefWidth="500.0"
                                      style="-fx-background-color: linear-gradient(to top,#5da007,#8ac184); -fx-background-radius: 20 20 0 0;"
                                      text="个人简介" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0"
-                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0"
+                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0"
                                      AnchorPane.topAnchor="20.0">
                                  <font>
                                     <Font name="Yuanti SC Regular" size="20.0"/>
@@ -188,22 +198,25 @@
                         <AnchorPane prefHeight="122.0" prefWidth="522.0">
                            <children>
                               <Button fx:id="userSaveButton" layoutX="7.0" layoutY="33.0" mnemonicParsing="false"
-                                      onMouseClicked="#OnUserSaveButtonClicked" prefHeight="50.0" prefWidth="146.0"
-                                      text="保存/新建" AnchorPane.topAnchor="5.0">
+                                      onMouseClicked="#onUserSaveButtonClicked" prefHeight="50.0" prefWidth="146.0"
+                                      style="-fx-background-radius: 20 20 20 20;" text="保存/新建"
+                                      AnchorPane.topAnchor="5.0">
                                  <font>
-                                    <Font size="24.0"/>
+                                    <Font name="Yuanti SC Regular" size="24.0"/>
                                  </font>
                               </Button>
                               <Button fx:id="backButton" layoutX="185.0" layoutY="33.0" mnemonicParsing="false"
-                                      prefHeight="50.0" prefWidth="146.0" text="返回" AnchorPane.topAnchor="5.0">
+                                      prefHeight="50.0" prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                      text="退出" AnchorPane.topAnchor="5.0">
                                  <font>
-                                    <Font size="24.0"/>
+                                    <Font name="Yuanti SC Regular" size="24.0"/>
                                  </font>
                               </Button>
                               <Button fx:id="mapButton" layoutX="358.0" layoutY="33.0" mnemonicParsing="false"
-                                      prefHeight="50.0" prefWidth="146.0" text="地图" AnchorPane.topAnchor="5.0">
+                                      prefHeight="50.0" prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                      text="地图" AnchorPane.topAnchor="5.0">
                                  <font>
-                                    <Font size="24.0"/>
+                                    <Font name="Yuanti SC Regular" size="24.0"/>
                                  </font>
                               </Button>
                            </children></AnchorPane>
@@ -223,7 +236,7 @@
                                     <Blend/>
                                  </effect>
                                  <HBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets top="20.0"/>
                                  </HBox.margin>
                               </Label>
                               <TextField fx:id="vertexField" onKeyPressed="#vertexEnter" prefHeight="80.0" prefWidth="260.0" promptText="按回车键查询" style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
@@ -239,25 +252,36 @@
                               </TextField>
                               <VBox prefHeight="96.0" prefWidth="146.0">
                                  <children>
-                                    <Button fx:id="vertexDeleteButton" mnemonicParsing="false" prefHeight="40.0"
-                                            prefWidth="146.0" text="删除" textFill="RED">
+                                    <Button fx:id="vertexSearchButton" mnemonicParsing="false" prefHeight="30.0"
+                                            prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;" text="搜索">
                                        <font>
-                                          <Font size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <VBox.margin>
-                                          <Insets bottom="10.0"/>
+                                          <Insets bottom="5.0"/>
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="vertexDeleteButton" mnemonicParsing="false" prefHeight="30.0"
+                                            prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;" text="删除"
+                                            textFill="RED">
+                                       <font>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0"/>
                                        </VBox.margin>
                                     </Button>
                                     <Button fx:id="vertexSaveButton" mnemonicParsing="false"
-                                            onMouseClicked="#OnVertexSaveButtonClicked" prefHeight="40.0"
-                                            prefWidth="146.0" text="保存/新建">
+                                            onMouseClicked="#onVertexSaveButtonClicked" prefHeight="30.0"
+                                            prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                            text="保存/新建">
                                        <font>
-                                          <Font size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                     </Button>
                                  </children>
                                  <padding>
-                                    <Insets bottom="25.0" top="20.0"/>
+                                    <Insets bottom="10.0" top="10.0"/>
                                  </padding>
                                  <HBox.margin>
                                     <Insets left="20.0"/>
@@ -280,12 +304,14 @@
                                           <Blend />
                                        </effect>
                                     </Label>
-                                    <TextField prefHeight="80.0" prefWidth="120.0" style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;" fx:id="x_vertexField">
+                                    <TextField prefHeight="80.0" prefWidth="120.0" promptText="一个正整数"
+                                               style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;"
+                                               fx:id="x_vertexField">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0" />
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
-                                          <Blend />
+                                          <Blend/>
                                        </effect>
                                     </TextField>
                                     <Label alignment="CENTER" prefHeight="80.0" prefWidth="120.0"
@@ -301,12 +327,14 @@
                                           <Insets left="40.0"/>
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="y_vertexField" prefHeight="80.0" prefWidth="120.0" style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
+                                    <TextField fx:id="y_vertexField" prefHeight="80.0" prefWidth="120.0"
+                                               promptText="一个正整数"
+                                               style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0" />
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
-                                          <Blend />
+                                          <Blend/>
                                        </effect>
                                     </TextField>
                                  </children>
@@ -339,28 +367,42 @@
                                           <Insets top="20.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <VBox prefHeight="80.0" prefWidth="146.0">
+                                    <VBox prefHeight="96.0" prefWidth="146.0">
                                        <children>
-                                          <Button fx:id="edgeDeleteButton" mnemonicParsing="false" prefHeight="40.0"
-                                                  prefWidth="159.0" text="删除" textFill="RED">
+                                          <Button fx:id="edgeSearchButton" mnemonicParsing="false" prefHeight="30.0"
+                                                  prefWidth="146.0" style="-fx-background-radius: 20 20 20 20;"
+                                                  text="搜索">
                                              <font>
-                                                <Font size="24.0"/>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
                                              </font>
                                              <VBox.margin>
-                                                <Insets bottom="10.0"/>
+                                                <Insets bottom="5.0"/>
                                              </VBox.margin>
                                           </Button>
-                                          <HBox prefHeight="7.0" prefWidth="146.0"/>
-                                          <Button fx:id="edgeSaveButton" mnemonicParsing="false"
-                                                  onMouseClicked="#OnEdgeSaveButtonClicked" prefHeight="40.0"
-                                                  prefWidth="159.0" text="保存/新建">
+                                          <Button fx:id="edgeDeleteButton" mnemonicParsing="false" prefHeight="30.0"
+                                                  prefWidth="159.0" style="-fx-background-radius: 20 20 20 20;"
+                                                  text="删除" textFill="RED">
                                              <font>
-                                                <Font size="24.0"/>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
                                              </font>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0"/>
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="edgeSaveButton" mnemonicParsing="false"
+                                                  onMouseClicked="#OnEdgeSaveButtonClicked" prefHeight="30.0"
+                                                  prefWidth="159.0" style="-fx-background-radius: 20 20 20 20;"
+                                                  text="保存/新建">
+                                             <font>
+                                                <Font name="Yuanti SC Regular" size="18.0"/>
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0"/>
+                                             </VBox.margin>
                                           </Button>
                                        </children>
                                        <padding>
-                                          <Insets bottom="25.0" top="20.0"/>
+                                          <Insets bottom="10.0"/>
                                        </padding>
                                        <HBox.margin>
                                           <Insets left="20.0"/>
@@ -383,9 +425,10 @@
                                        </effect>
                                     </Label>
                                     <TextField fx:id="u_edgeField" editable="false" prefHeight="80.0" prefWidth="120.0"
+                                               promptText="搜索后编辑"
                                                style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
                                           <Blend/>
@@ -405,9 +448,10 @@
                                        </HBox.margin>
                                     </Label>
                                     <TextField fx:id="v_edgeField" editable="false" prefHeight="80.0" prefWidth="120.0"
+                                               promptText="搜索后编辑"
                                                style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
                                           <Blend/>
@@ -430,9 +474,10 @@
                                        </effect>
                                     </Label>
                                     <TextField fx:id="distanceField" prefHeight="80.0" prefWidth="120.0"
+                                               promptText="搜索后编辑"
                                                style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
                                           <Blend/>
@@ -452,9 +497,10 @@
                                        </HBox.margin>
                                     </Label>
                                     <TextField fx:id="limitField" prefHeight="80.0" prefWidth="120.0"
+                                               promptText="搜索后编辑"
                                                style="-fx-background-color: #CCC8B9; -fx-background-radius: 0 20 20 0;">
                                        <font>
-                                          <Font name="Yuanti SC Regular" size="24.0"/>
+                                          <Font name="Yuanti SC Regular" size="18.0"/>
                                        </font>
                                        <effect>
                                           <Blend/>

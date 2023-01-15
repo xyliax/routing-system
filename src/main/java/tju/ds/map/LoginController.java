@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
 import tju.ds.map.model.User;
@@ -47,18 +46,18 @@ public class LoginController {
         usernameField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if (passwordField.getText().length() != 0)
-                    onLoginButtonClicked(null);
+                    onLoginButtonClicked();
                 else passwordField.requestFocus();
             }
         });
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER)
-                onLoginButtonClicked(null);
+                onLoginButtonClicked();
         });
     }
 
     @FXML
-    protected void onLoginButtonClicked(MouseEvent mouseEvent) {
+    protected void onLoginButtonClicked() {
         String text = loginButton.getText();
         loginButton.setText("正在登录..");
         Animation loginAnimation = new FlipInX(loginButton).getTimeline();

@@ -24,7 +24,7 @@ public class Edge {
                     (String) document.get("vid"),
                     (double) document.get("distance"),
                     (double) document.get("limit"),
-                    EdgeCondition.valueOf((String) document.getOrDefault("condition", "UNKNOWN")));
+                    EdgeCondition.valueOf((String) document.getOrDefault("condition", "MEDIUM")));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -38,6 +38,10 @@ public class Edge {
                 .append("distance", distance)
                 .append("limit", limit)
                 .append("condition", condition.name());
+    }
+
+    public double timeCost() {
+        return 0;
     }
 
     @Override

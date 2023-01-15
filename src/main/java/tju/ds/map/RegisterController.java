@@ -12,7 +12,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import lombok.SneakyThrows;
 import tju.ds.map.dao.MongoController;
 import tju.ds.map.model.User;
@@ -53,7 +52,7 @@ public class RegisterController {
         usernameField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if (passwordField.getText().length() != 0)
-                    onRegisterButtonClicked(null);
+                    onRegisterButtonClicked();
                 else passwordField.requestFocus();
             }
         });
@@ -63,12 +62,12 @@ public class RegisterController {
         });
         confirmField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER)
-                onRegisterButtonClicked(null);
+                onRegisterButtonClicked();
         });
     }
 
     @FXML
-    public void onRegisterButtonClicked(MouseEvent mouseEvent) {
+    public void onRegisterButtonClicked() {
         String text = registerButton.getText();
         registerButton.setText("正在注册...");
         Animation registerAnimation = new FlipInX(registerButton).getTimeline();
