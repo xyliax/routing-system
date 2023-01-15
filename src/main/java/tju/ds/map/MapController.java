@@ -241,7 +241,6 @@ public class MapController {
                 }
             }
         }
-        System.out.println(precursor);
         Vertex next = stop;
         Vertex pre = precursor.get(stop);
         while (next != start) {
@@ -254,7 +253,38 @@ public class MapController {
     }
 
     private ArrayList<Edge> findShortestTime(Vertex start, Vertex stop) {
-        return new ArrayList<>();
+        ArrayList<Edge> result = new ArrayList<>();
+        HashMap<Vertex, Double> time = new HashMap<>();
+        HashMap<Vertex, Vertex> precursor = new HashMap<>();
+        HashSet<Vertex> visited = new HashSet<>();
+        PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>(Comparator.comparing(time::get));
+        formedGraph.getVertices().values().forEach(vertex -> time.put(vertex, Double.POSITIVE_INFINITY));
+        time.put(start, 0.0);
+        priorityQueue.add(start);
+        while (!priorityQueue.isEmpty()) {
+            Vertex current = priorityQueue.poll();
+            if (visited.contains(current)) continue;
+            visited.add(current);
+            HashMap<String, Edge> currentEdges = formedGraph.getGraph().get(current);
+            for (String nextId : currentEdges.keySet()) {
+                Vertex next = formedGraph.getVertices().get(nextId);
+                Edge toNext = currentEdges.get(nextId);
+                if (time.get(current) + toNext.getDistance() < time.get(next)) {
+                    time.put(next, time.get(current) + toNext.getDistance());
+                    precursor.put(next, current);
+                    priorityQueue.add(next);
+                }
+            }
+        }
+        Vertex next = stop;
+        Vertex pre = precursor.get(stop);
+        while (next != start) {
+            result.add(formedGraph.getGraph().get(pre).get(next.getId()));
+            next = pre;
+            pre = precursor.get(next);
+        }
+        Collections.reverse(result);
+        return result;
     }
 
     @FXML

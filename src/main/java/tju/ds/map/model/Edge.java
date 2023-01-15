@@ -41,7 +41,7 @@ public class Edge {
     }
 
     public double timeCost() {
-        return 0;
+        return distance/(condition.ratio+1)/6*limit;
     }
 
     @Override

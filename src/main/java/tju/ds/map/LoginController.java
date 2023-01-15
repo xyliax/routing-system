@@ -40,6 +40,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        registerButton.requestFocus();
         registerButton.setOnMouseClicked(event -> stage.setScene(RegisterController.scene()));
         registerButton.setOnMouseEntered(event -> registerButton.setText("点我注册！"));
         registerButton.setOnMouseExited(event -> registerButton.setText("新用户？"));

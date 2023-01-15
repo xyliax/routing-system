@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import static tju.ds.map.MapApplication.stage;
 
+/*
+
+ */
 public class AdminController {
     private final MongoController mongoController = MongoController.getInstance();
     private Graph graph;
@@ -165,6 +168,9 @@ public class AdminController {
         }
     }
 
+    /*
+
+     */
     @FXML
     protected void onUserSaveButtonClicked() {
         Animation loginAnimation = new FlipInX(userSaveButton).getTimeline();
